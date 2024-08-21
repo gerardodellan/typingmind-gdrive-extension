@@ -1,14 +1,10 @@
-(function() {
-  class SimpleExtension {
-    constructor() {
-      console.log("Simple extension initialized");
-    }
-
-    onload() {
-      console.log("Simple extension loaded");
-      alert("Hello from the simple extension!");
-    }
+window.TypingMindExtension = class {
+  constructor() {
+    console.log("Simple extension initialized");
   }
 
-  window.TypingMindExtension = SimpleExtension;
-})();
+  onload() {
+    console.log("Simple extension loaded");
+    alert("Hello from the simple extension!");
+  }
+};

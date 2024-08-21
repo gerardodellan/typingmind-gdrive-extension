@@ -9,19 +9,33 @@ window.TypingMindExtension = class {
   }
 
   addBackupButton() {
-    const existingButton = document.getElementById('google-drive-backup-button');
-    if (existingButton) {
-      return;
+    // Try to add the button every second until it succeeds
+    const addButtonInterval = setInterval(() => {
+      if (this.tryAddButton()) {
+        clearInterval(addButtonInterval);
+      }
+    }, 1000);
+  }
+
+  tryAddButton() {
+    if (document.getElementById('google-drive-backup-button')) {
+      return true; // Button already exists
+    }
+    const sidebarElement = document.querySelector('.sidebar-container');
+    if (!sidebarElement) {
+      console.log("Sidebar not found, will try again");
+      return false;
     }
     const button = document.createElement('button');
     button.id = 'google-drive-backup-button';
-    button.textContent = 'Backup to Google Drive';
-    button.style.position = 'fixed';
-    button.style.bottom = '20px';
-    button.style.right = '20px';
-    button.style.zIndex = '9999';
+    button.textContent = 'Backup to Drive';
+    button.style.width = '100%';
+    button.style.padding = '10px';
+    button.style.marginTop = '10px';
     button.onclick = () => this.backupToDrive();
-    document.body.appendChild(button);
+    sidebarElement.appendChild(button);
+    console.log("Backup button added successfully");
+    return true;
   }
 
   backupToDrive() {
